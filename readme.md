@@ -56,16 +56,14 @@ After installation, start the web application server:
 python app.py
 ```
 
-The application will be available at [http://localhost:5000](http://localhost:5000).
-
 ---
 
 ## **Running the Web App**
 
 Once the server is running (`python app.py`), you can interact with the application by:
 
-1. Navigating to `http://localhost:5000` in your web browser.
-2. Uploading your own image or allowing the server to randomly select an image from the [https://huggingface.co/datasets/mdroth/landscapes](huggingface dataset).
+1. Navigating to [http://127.0.0.1:5000](http://127.0.0.1:5000) in your web browser.
+2. Uploading your own image or allowing the server to randomly select an image from the [huggingface dataset](https://huggingface.co/datasets/mdroth/landscapes).
 3. Playing the corresponding synthesized environmental sound generated based on the image.
 
 ---
