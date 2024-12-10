@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STATS507 Final Project Web App</title>
+    <style>
+        /* General Body Styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Main Title */
+        h1 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            text-align: center;
+        }
+
+        /* Centralized container with buttons and image */
+        .container {
+            text-align: center;
+            margin: 20px;
+        }
+
+        /* Placeholder for the image - Centered & Styled */
+        #image-container {
+            margin: 20px auto;
+            max-width: 500px;
+            max-height: 400px;
+            border: 2px solid #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #eaeaea;
+            color: #555;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        #image-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Button Container Styling */
+        .button-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Unified Button Style */
+        button,
+        .file-label {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            outline: none;
+            text-align: center;
+        }
+
+        button:hover,
+        .file-label:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hide the actual file input */
+        #upload-btn {
+            display: none;
+        }
+
+        /* Style the label to look like the button */
+        .file-label {
+            cursor: pointer;
+        }
+
+        /* Centered audio player style */
+        audio {
+            margin: 15px 0;
+            display: block;
+            width: 90%;
+            max-width: 500px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>STATS507 Final Project Web Application</h1>
+    
+    <div class="container">
+        <!-- Placeholder for image display -->
+        <div id="image-container">Select or upload an image to begin...</div>
+
+        <!-- Button Group with styled file input -->
+        <div class="button-container">
+            <button id="random-btn">Choose Random Image</button>
+            <!-- Styled file upload -->
+            <label class="file-label" for="upload-btn">Choose Image</label>
+            <input type="file" id="upload-btn" accept="image/*" />
+        </div>
+
+        <!-- Audio Player -->
+        <audio id="audio-player" controls loop></audio>
+    </div>
+
+    <script>
+        /** Handle Random Image Fetch */
+        document.getElementById('random-btn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/random-image');
+                const data = await response.json();
+                if (!response.ok || !data.audio_url || !data.image_data) throw new Error(data.error || 'Failed to fetch random image.');
+
+                const imgBlob = new Blob([Uint8Array.from(data.image_data.split('').map(c => c.charCodeAt(0)))], { type: 'image/jpeg' });
+                const imgUrl = URL.createObjectURL(imgBlob);
+                const imgContainer = document.getElementById('image-container');
+                imgContainer.innerHTML = `<img src="${imgUrl}" alt="Random Image"/>`;
+
+                const audioElem = document.getElementById('audio-player');
+                audioElem.src = data.audio_url;
+                audioElem.play();
+            } catch (error) {
+                console.error('Error loading random image/audio:', error);
+                alert('Could not load random image or audio.');
+            }
+        });
+
+        /** Handle File Upload */
+        document.getElementById('upload-btn').addEventListener('change', async (e) => {
+            try {
+                const file = e.target.files[0];
+                if (!file) throw new Error('No file selected.');
+
+                const formData = new FormData();
+                formData.append('image', file);
+
+                const response = await fetch('/upload-image', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await response.json();
+                if (!response.ok || !data.audio_url || !data.image_data) throw new Error(data.error || 'Failed to generate audio.');
+
+                const imgBlob = new Blob([Uint8Array.from(data.image_data.split('').map(c => c.charCodeAt(0)))], { type: 'image/jpeg' });
+                const imgUrl = URL.createObjectURL(imgBlob);
+                const imgContainer = document.getElementById('image-container');
+                imgContainer.innerHTML = `<img src="${imgUrl}" alt="Uploaded Image"/>`;
+
+                const audioElem = document.getElementById('audio-player');
+                audioElem.src = data.audio_url;
+                audioElem.play();
+            } catch (error) {
+                console.error('Error processing uploaded image/audio:', error);
+                alert('Could not process uploaded image or audio.');
+            }
+        });
+    </script>
+</body>
+</html>
