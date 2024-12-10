@@ -38,7 +38,7 @@ Follow these step-by-step instructions to set up and run the project:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/random-image-to-audio.git
+git clone https://github.com/mattias-blum/WhiteNoiseSynthesis
 cd random-image-to-audio
 ```
 
@@ -65,7 +65,7 @@ The application will be available at [http://localhost:5000](http://localhost:50
 Once the server is running (`python app.py`), you can interact with the application by:
 
 1. Navigating to `http://localhost:5000` in your web browser.
-2. Uploading your own image or allowing the server to randomly select an image.
+2. Uploading your own image or allowing the server to randomly select an image from the [https://huggingface.co/datasets/mdroth/landscapes](huggingface dataset).
 3. Playing the corresponding synthesized environmental sound generated based on the image.
 
 ---
