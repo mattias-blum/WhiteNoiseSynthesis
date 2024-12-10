@@ -1,5 +1,3 @@
-Here's the complete, copyable **README.md** content for your project:
-
 ---
 
 # Randomized Image-to-Audio Synthesis with CLIP and Pydub
@@ -46,29 +44,13 @@ cd random-image-to-audio
 
 ---
 
-### 2. Set up a Virtual Environment
-It's recommended to use a virtual environment to manage dependencies:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-```
-
----
-
-### 3. Install Dependencies
+### 2. Install Dependencies
 Install all required dependencies with the following command:
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-### 4. Prepare Datasets
-Ensure that the ESC-50 environmental sound dataset is downloaded and available. Update the file path in the application if necessary. For details on datasets, see [ESC-50 GitHub Repository](https://github.com/karolzielinski/ESC-50).
-
----
-
-### 5. Run the Application
+### 3. Run the Application
 After installation, start the web application server:
 ```bash
 python app.py
@@ -149,7 +131,7 @@ The web server is implemented in **app.py**, powered by Flask. Below is a summar
 ### **3. `/generate_audio`**
 - **Method**: `GET`
 - **Description**: Generates and returns audio based on computed similarities.
-- **Response**: The audio data (in `.mp3` format) for playback on the frontend.
+- **Response**: The audio data (in `.wav` format) for playback on the frontend.
 
 ---
 
@@ -169,13 +151,6 @@ numpy==1.23.1
 
 ---
 
-## **Future Directions**
-1. Fine-tune the CLIP model or integrate more advanced audio preprocessing pipelines.
-2. Expand sound categories beyond ESC-50.
-3. Implement real-time audio generation capabilities for user interactivity.
-
----
-
 ## **Acknowledgements**
 This project builds on the following tools and datasets:
 1. OpenAI's CLIP model for semantic similarity computation.
@@ -183,11 +158,3 @@ This project builds on the following tools and datasets:
 3. Flask and Pydub for web server implementation and audio manipulation.
 
 ---
-
-If you encounter any issues, feel free to submit an issue on the repository's [GitHub page](https://github.com/yourusername/random-image-to-audio).
-
-Happy synthesizing!
-
----
-
-This is now ready to be copied directly into your project's repository as **README.md**. Let me know if you need adjustments!
